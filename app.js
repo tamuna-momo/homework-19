@@ -104,7 +104,7 @@ const formValidator = (form, fieldsConfig, onValidateSuccess, onValidationError)
         name: 'personal_number',
         rules: [
             {required: true, messsage: 'personal number is required'},
-            {length: 11, message: 'სიმბოლოების რაოდენობა უნდა იყოს 11'},
+            {maxLength: 11, message: 'სიმბოლოების რაოდენობა უნდა იყოს 11'},
         ]
     },
     {
