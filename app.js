@@ -5,6 +5,8 @@ const formValidator = (form, fieldsConfig, onValidateSuccess, onValidationError)
       const rules = fieldConfig.rules;
       const formGroup = fieldElement.closest('.form-group');
       const errorElement = formGroup.querySelector('.form-error-message');
+      const personalNumber = document.querySelector("#personal_number");
+      const mobileNumber = document.querySelector("#mobile_number");
   
       const fieldValidationResult = {name: fieldConfig.name, value: value, errors: []};
       rules.forEach(rule => {
@@ -34,6 +36,24 @@ const formValidator = (form, fieldsConfig, onValidateSuccess, onValidationError)
         });
       })
     }
+    
+    if (personalNumber.value.length === 11) {
+      setSuccessFor(personalNumber);
+    } else {
+      setErrorFor(personalNumber, "Personal number must contain 11 digit");
+    }
+    
+    if (mobileNumber.value.length == 9) {
+      setSuccessFor(mobileNumber);
+    } else if (mobileNumber.value.length == 13) {
+      let firstCharacter = mobileNumber.value.slice(0, 1);
+      if (firstCharacter === "+") {
+        setSuccessFor(mobileNumber);
+      }
+    } else {
+      setErrorFor(mobileNumber, "Mobile number must contain 9 or 13 digit");
+    }
+  }
   
     const validateOnSubmit = () => {
       const validatedFields = [];
@@ -64,7 +84,7 @@ const formValidator = (form, fieldsConfig, onValidateSuccess, onValidationError)
     }
     listenFormSubmit();
     validateOnChange();
-  }
+  
   
   const fieldsConfig = [
     {
@@ -91,7 +111,8 @@ const formValidator = (form, fieldsConfig, onValidateSuccess, onValidationError)
         name:'mobile_number',
         rules: [
             {required: true, message: 'please enter your mobile number'},
-        
+            {maxLength:13, message: 'მობილურის ნომერი უნდა შეიცავდეს 9 ან 13 სიმბოლოს' },
+            {type: 'number', message: 'please enter your mobile number'}
         ]
 
     },
